@@ -3,6 +3,7 @@ package com.khusainov.rinat.pokedex.presentation.ui.main.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.khusainov.rinat.pokedex.Constants.PAGE_LIMIT
 import com.khusainov.rinat.pokedex.domain.interactor.IPokemonInteractor
 import com.khusainov.rinat.pokedex.domain.model.PokemonEntity
 import kotlinx.coroutines.launch
@@ -13,13 +14,9 @@ class PokemonViewModel(
 
     val pokemonLiveData = MutableLiveData<List<PokemonEntity>>()
 
-    init {
-        getPokemon()
-    }
-
-    private fun getPokemon() {
+    fun getPokemon(offset:Int) {
         viewModelScope.launch {
-            val entity = interactor.getPokemon(63, 0)
+            val entity = interactor.getPokemon(PAGE_LIMIT, offset)
             pokemonLiveData.value = entity
         }
     }
